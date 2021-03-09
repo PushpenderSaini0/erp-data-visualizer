@@ -30,11 +30,24 @@ function addButton(name) {
 
 async function getERPData() {
     if (!isDataFetched) {
+        const getDataBtn = document.getElementById('get-data-btn');
+        const errorBox = document.getElementById('error-alert-box');
+
+        getDataBtn.innerHTML = "<div class='spinner-border'></div>";
+
         const erpData = await getERPDataAPI();
+        if ((erpData.length) < 1) {
+            errorBox.innerHTML = "<div class='alert alert-danger' role='alert'>Could not fetch data</div>";
+            getDataBtn.innerHTML = "Get Data";
+            return "ERROR";
+        }
+        errorBox.innerHTML = "";
         erpDataG = erpData;
         const cources = getCourses(erpData);
         cources.forEach(addButton);
         isDataFetched = true;
+        getDataBtn.disabled = true;
+        getDataBtn.innerHTML = "Data Loaded";
     }
     else {
     }
