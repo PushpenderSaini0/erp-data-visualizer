@@ -4,7 +4,7 @@ var erpDataG = [];
 
 async function getERPDataAPI() {
     const sid = document.getElementById("sid");
-    const url = 'https://notes.pushpendersaini.com/tools/demo.php?sid=';
+    const url = 'http://notes.pushpendersaini.com/tools/erpdvapi/getAbsentSummaryData.php?sid=';
     const response = await fetch(url + sid.value);
     const data = await response.json();
     return data;
