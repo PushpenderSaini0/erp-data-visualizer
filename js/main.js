@@ -10,6 +10,16 @@ async function getERPDataAPI() {
     return data;
 }
 
+async function getERPDataAPIUP() {
+    const uname = document.getElementById("uname");
+    const passwd = document.getElementById("passwd");
+    const auth = btoa(btoa(uname.value) + ":" + (btoa(passwd.value)));
+    const url = 'https://notes.pushpendersaini.com/tools/erpdvapi/getAbsentSummaryData.php?auth=';
+    const response = await fetch(url + auth);
+    const data = await response.json();
+    return data;
+}
+
 function getCourses(data) {
     const cources = new Set();
     const addToSet = (item) => {
@@ -91,9 +101,40 @@ function plotAbsentSummaryTable(cource) {
     table.innerHTML = `<br><br><h2>Classes you were marked abset in ${cource}</h2><table class='table table-bordered'><tbody><tr><th scope='col'>S.No</th><th scope='col'>Date</th><th scope='col'>Time</th></tr>${str}</tbody></table>`;
 }
 
+
+async function getERPDataUP() {
+    if (!isDataFetched) {
+        const getDataBtnUP = document.getElementById('get-dataup-btn');
+        const getDataBtn = document.getElementById('get-data-btn');
+        const errorBox = document.getElementById('error-alert-box');
+
+        getDataBtnUP.innerHTML = "<div class='spinner-border'></div>";
+
+        const erpData = await getERPDataAPIUP();
+        if ((erpData.length) < 1) {
+            errorBox.innerHTML = "<div class='alert alert-danger' role='alert'>Could not fetch data</div>";
+            getDataBtnUP.innerHTML = "Get Data";
+            return "ERROR";
+        }
+        errorBox.innerHTML = "";
+        erpDataG = erpData;
+        const cources = getCourses(erpData);
+        cources.forEach(addButton);
+        isDataFetched = true;
+        getDataBtnUP.disabled = true;
+        getDataBtnUP.innerHTML = "Data Loaded";
+        getDataBtn.disabled = true;
+        getDataBtn.innerHTML = "Data Loaded";
+    }
+    else { }
+
+}
+
+
 async function getERPData() {
     if (!isDataFetched) {
         const getDataBtn = document.getElementById('get-data-btn');
+        const getDataBtnUP = document.getElementById('get-dataup-btn');
         const errorBox = document.getElementById('error-alert-box');
 
         getDataBtn.innerHTML = "<div class='spinner-border'></div>";
@@ -111,6 +152,8 @@ async function getERPData() {
         isDataFetched = true;
         getDataBtn.disabled = true;
         getDataBtn.innerHTML = "Data Loaded";
+        getDataBtnUP.disabled = true;
+        getDataBtnUP.innerHTML = "Data Loaded";
     }
     else { }
 

@@ -26,12 +26,29 @@
 			<hr class="my-4">
 			<p>We respect privacy, no data is stored on our server and all the processing is done client side. We take
 				the ASP Session ID to fetch your absent summary data.<br>You can find the ASP Session ID in the cookies
-				after a successful login in erp website.</p>
+				after a successful login in erp website.
+				<br>
+				You can also fetch data using your username and password, all communication are HTTPS encrypted and data
+				is processed on your machine
+			</p>
 			<br>
 			<p>
 				Tip : Enter demo as Session ID to fetch a demo data
 			</p>
 			<br>
+			<div class="lead">
+				<form class="form-inline">
+					<div class="form-group mb-2">
+						<input type="text" id="uname" class="form-control" placeholder="Username">
+					</div>
+					<div class="form-group mx-sm-3 mb-2">
+						<input type="password" id="passwd" class="form-control" placeholder="Password">
+					</div>
+					<button id="get-dataup-btn" type="button" onclick="getERPDataUP()" class="btn btn-primary mb-2">Get
+						Data</button>
+				</form>
+			</div>
+			<p> OR </p>
 			<div class="lead">
 				<form class="form-inline">
 					<div class="form-group">
@@ -65,7 +82,7 @@
 
 	<div class="d-flex justify-content-center">
 		<div id="absent-summary-table-area">
-			
+
 		</div>
 	</div>
 	<script src="./js/main.js"></script>
