@@ -28,6 +28,69 @@ function addButton(name) {
     courcesButtonGroup.appendChild(btn);
 }
 
+function getAttandance(cource) {
+    var totalClasses = 0;
+    var present = 0;
+    const getEntry = (item) => {
+        if (cource.localeCompare(item.courseName) == 0) {
+            if ("Present".localeCompare(item.status) == 0) {
+                totalClasses = totalClasses + 1;
+                present = present + 1;
+            }
+            else {
+                totalClasses = totalClasses + 1;
+            }
+        }
+    }
+    erpDataG.forEach(getEntry);
+    return { "totalClasses": totalClasses, "present": present };
+}
+
+function plotSummaryTable(cource) {
+    const table = document.getElementById('summary-table-area');
+    const attandance = getAttandance(cource);
+    const attandanceP = ((attandance.present / attandance.totalClasses) * 100).toFixed(2);
+
+    var leaves = 0;
+    var tattandanceP = attandanceP;
+    var str = "";
+
+    if (attandanceP >= 70) {
+        str = "can miss";
+        while (tattandanceP > 70) {
+            leaves = leaves + 1;
+            tattandanceP = (((attandance.present) / (attandance.totalClasses + leaves)) * 100).toFixed(2);
+        }
+        if (attandanceP != 70) leaves = leaves - 1;
+    }
+    else {
+        str = "need to attend";
+        while (tattandanceP <= 70) {
+            leaves = leaves + 1;
+            tattandanceP = (((attandance.present + leaves) / (attandance.totalClasses + leaves)) * 100).toFixed(2);
+            console.log(tattandanceP);
+        }
+    }
+
+    table.innerHTML = `<table class='table table-bordered'><caption>${cource}</caption><tbody><tr><th scope='row'>Your Attandance :</th><td> ${attandanceP}% </td></tr><tr><th scope='row'>Classes you ${str} to maintain 70%</th><td> ${leaves} </td></tr></tbody></table>`;
+}
+
+function plotAbsentSummaryTable(cource) {
+    const table = document.getElementById('absent-summary-table-area');
+    var str = "";
+    var num = 0;
+    const getEntry = (item) => {
+        if (cource.localeCompare(item.courseName) == 0) {
+            if ("Absent".localeCompare(item.status) == 0) {
+                num = num + 1;
+                str = str + `<tr><td> ${num} </td><td> ${item.date} </td><td> ${item.time} </td></tr>`;
+            }
+        }
+    }
+    erpDataG.forEach(getEntry);
+    table.innerHTML = `<br><br><h2>Classes you were marked abset in ${cource}</h2><table class='table table-bordered'><tbody><tr><th scope='col'>S.No</th><th scope='col'>Date</th><th scope='col'>Time</th></tr>${str}</tbody></table>`;
+}
+
 async function getERPData() {
     if (!isDataFetched) {
         const getDataBtn = document.getElementById('get-data-btn');
@@ -49,8 +112,7 @@ async function getERPData() {
         getDataBtn.disabled = true;
         getDataBtn.innerHTML = "Data Loaded";
     }
-    else {
-    }
+    else { }
 
 }
 
@@ -96,12 +158,13 @@ function getCoursePlotYP(cource) {
 }
 
 function plotData(cource) {
+
+    plotSummaryTable(cource);
+
     document.getElementById('chart-area').innerHTML = "";
     const chartCanvas = document.createElement("CANVAS");
     const chartArea = document.getElementById('chart-area');
     chartArea.appendChild(chartCanvas);
-
-
 
     var ctx = chartCanvas.getContext('2d');
     const plotX = getCoursePlotX(cource);
@@ -174,4 +237,7 @@ function plotData(cource) {
             }
         }
     });
+
+    plotAbsentSummaryTable(cource);
+
 }
