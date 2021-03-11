@@ -1,6 +1,6 @@
 # ERP Data Visualizer
 
-Live demo [here](https://github.com/PushpenderSaini0/erp-data-visualizer)
+Live demo [here](https://pushpendersaini0.github.io/erp-data-visualizer/)
 
 Erp Data Visualizer is a simple tool to plot the absent summary data from ERP of ncuindia into beautiful and informative graphs.
 
