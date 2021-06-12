@@ -5,6 +5,7 @@
 	<meta charset="utf-8" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+	<script type="module" src="./js/app.js" defer></script>
 	<title>EDV</title>
 	<style>
 		#chart-area {
@@ -44,7 +45,7 @@
 					<div class="form-group mx-sm-3 mb-2">
 						<input type="text" class="form-control" id="sid" placeholder="SID">
 					</div>
-					<button id="get-data-btn" type="button" onclick="getERPData()" class="btn btn-primary mb-2">Get
+					<button id="get-data-btn-sid" type="button" class="btn btn-primary mb-2">Get
 						Data</button>
 				</form>
 			</div>
@@ -57,9 +58,10 @@
 					<div class="form-group mx-sm-3 mb-2">
 						<input type="password" id="passwd" class="form-control" placeholder="Password">
 					</div>
-					<button id="get-dataup-btn" type="button" onclick="getERPDataUP()" class="btn btn-primary mb-2">Get
+					<button id="get-data-btn-upd" type="button" class="btn btn-primary mb-2">Get
 						Data</button>
 				</form>
+				<br>
 				<div id="error-alert-box"></div>
 			</div>
 		</div>
@@ -85,7 +87,6 @@
 
 		</div>
 	</div>
-	<script src="./js/main.js"></script>
 </body>
 
 </html>
