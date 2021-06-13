@@ -2,15 +2,20 @@
 
 Live demo [here](https://pushpendersaini0.github.io/erp-data-visualizer/)
 
-Erp Data Visualizer is a simple tool to plot the absent summary data from ERP of ncuindia into beautiful and informative graphs.
+Erp Data Visualizer is an open source tool to plot the absent summary data from ERP of ncuindia into beautiful and informative graphs and tables.
 
 ### Working
 
 * The tool takes user's ASP Session ID as input which the user can find in cookies after a successful login in erp website.
 
-* The Session ID is used to make an API call to a server that will scrape the tables in absent summary section and convert the result into JSON.
+* The Session ID is used to make a call to an AWS lambda function that will scrape the tables in absent summary section and convert the result into JSON.
+    * The code hosted on AWS lambda can be found in the `server` folder
 
 * This JSON is then stored and processed in client browser using JS and the processed data is plotted using Chatjs library
+
+### Build
+
+* The Js is bundled and served from the build branch
 
 ### Contribution
 
