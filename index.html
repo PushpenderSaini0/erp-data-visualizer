@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 	
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 	<link rel="icon" href="./favicon.ico" type="image/vnd.microsoft.icon" sizes="48x48"> 
 	<script type="module" src="./js/app.js" defer></script>
@@ -23,15 +23,16 @@
 	<div class="jumbotron">
 		<div class="container">
 			<h1 class="display-4">ERP Data Visualizer</h1>
-			<p class="lead">Erp Data Visualizer is a simple tool to plot the absent summary data from ERP of ncuindia
-				into beautiful and informative graphs.</p>
+			<p class="lead">Erp Data Visualizer is an open source tool to plot the absent summary data from ERP of ncuindia
+				into beautiful and informative graphs and tables.</p>
 			<hr class="my-4">
-			<p>We respect privacy, no data is stored on our server and all the processing is done client side. We take
-				the ASP Session ID to fetch your absent summary data.<br>You can find the ASP Session ID in the cookies
+			<p>We take the ASP Session ID to fetch your absent summary data.<br>You can find the ASP Session ID in the cookies
 				after a successful login in erp website.
 				<br>
-				You can also fetch data using your username and password, all communication are HTTPS encrypted and data
-				is processed on your machine
+				Data is fetched by calling an AWS lambda function, We respect privacy, no data is logged and all the processing is done client side. 
+				You can also fetch data using your username and password, all communication are HTTPS encrypted.
+				<br>
+				You can also take a look at the source code <a href="https://github.com/PushpenderSaini0/erp-data-visualizer">here</a>.
 			</p>
 			<br>
 			<p>
