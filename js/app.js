@@ -18,7 +18,16 @@ const btnClickHandler = event => {
             throw "Could not fetch data";
         }
         else {
-            removeSpinner(true,"Data Loaded");
+            document.getElementById('summary-table-area')
+                .innerHTML = `
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Data Loaded Successfully</h4>
+                <hr>
+                <p>You can now click on each sunject to get more
+                    detail about it !</p>
+            </div>
+            `;
+            removeSpinner(true, "Data Loaded");
             clearError();
             getCourses(data).forEach(cource => {
                 addButton(cource).addEventListener("click", showCourceDetail.bind(this, [data]));
@@ -26,7 +35,7 @@ const btnClickHandler = event => {
             );
         }
     }).catch(error => {
-        removeSpinner(false,"Get Data");
+        removeSpinner(false, "Get Data");
         showError(error);
     });
 }
