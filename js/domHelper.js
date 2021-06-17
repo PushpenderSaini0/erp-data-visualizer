@@ -13,7 +13,7 @@ export function addButton(name) {
 export function plotSummaryTable(data) {
     const table = document.getElementById('summary-table-area');
     const attandance = data;
-    const attandanceP = ((attandance.present / attandance.totalClasses) * 100).toFixed(2);
+    const attandanceP = data.percentage;
 
     let leaves = 0;
     let tattandanceP = attandanceP;

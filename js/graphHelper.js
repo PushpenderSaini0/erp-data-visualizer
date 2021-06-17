@@ -1,4 +1,4 @@
-import {getCourses, getAttandance} from './dataProcessor.js'
+import { getCourses, getAttandance } from './dataProcessor.js'
 
 export function plotGraph(data) {
 
@@ -45,7 +45,7 @@ export function plotGraph(data) {
             data: plotYS,
             fill: false,
             borderColor: '#F71735',
-            borderDash: [5,5],
+            borderDash: [5, 5],
             pointRadius: 0,
             borderWidth: 2
         }, {
@@ -55,11 +55,11 @@ export function plotGraph(data) {
             data: plotY,
 
 
-         
+
             backgroundColor: '#9EE493',
             borderColor: "#6CD65C",
             borderWidth: 2,
-        
+
         }]
 
     };
@@ -94,12 +94,12 @@ export function plotGraph(data) {
 
 
 // helper function for plotSummaryGraph
-function getColors(data){
+function getColors(data) {
     // returns an Array of n colors, 
     // if less than 70, red else green.
     let colors = [];
-    for(let i=0; i<data.length; i++){
-        if(data[i] >= 70)
+    for (let i = 0; i < data.length; i++) {
+        if (data[i] >= 70)
             colors.push(`hsla(140, 50%, 60%, 1)`);
         else
             colors.push(`hsla(0, 50%, 60%, 1)`);
@@ -107,7 +107,7 @@ function getColors(data){
     return colors
 }
 
-export function plotSummaryGraph(data){
+export function plotSummaryGraph(data) {
     document.getElementById('chart-area').style.margin = "0px 0px 30px 0px";
     document.getElementById('chart-area').innerHTML = "";
     const chartCanvas = document.createElement("CANVAS");
@@ -118,9 +118,8 @@ export function plotSummaryGraph(data){
 
     const courses = getCourses(data);
     let courseAttendance = [];
-    courses.forEach( (course) =>{
-        let courseData = getAttandance(data, course);
-        courseAttendance.push(((courseData.present / courseData.totalClasses) * 100).toFixed(2));
+    courses.forEach((course) => {
+        courseAttendance.push(getAttandance(data, course).percentage);
     });
 
     data = {
@@ -141,17 +140,17 @@ export function plotSummaryGraph(data){
             pointRadius: 0,
             borderDash: [5]
         }
-        
-    ],
-    
-    labels: courses
+
+        ],
+
+        labels: courses
 
     };
 
     new Chart(ctx, {
         type: 'bar',
         data: data,
-        options:{
+        options: {
             responsive: true,
             title: {
                 display: true,
@@ -161,7 +160,7 @@ export function plotSummaryGraph(data){
                 yAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        max:100
+                        max: 100
                     }
                 }]
             }
