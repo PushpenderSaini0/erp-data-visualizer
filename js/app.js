@@ -23,8 +23,8 @@ const btnClickHandler = event => {
             <div class="alert alert-success" role="alert">
                 <h4 class="alert-heading">Data Loaded Successfully</h4>
                 <hr>
-                <p>You can now click on each sunject to get more
-                    detail about it !</p>
+                <p>You can now click on each subject to get more
+                    details about it !</p>
             </div>
             `;
             removeSpinner(true, "Data Loaded");
