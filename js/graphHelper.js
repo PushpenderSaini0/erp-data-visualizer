@@ -78,19 +78,21 @@ export function plotGraph(data) {
 
 
 // helper function for plotSummaryGraph
-function generateColors(n){
-    // returns an Array of n colors
+function getColors(data){
+    // returns an Array of n colors, 
+    // if less than 70, red else green.
     var colors = [];
-    var avg = Math.floor(360/n);
-    var hue = 0;
-    for(var i=0; i<n; i++){
-        hue += avg;
-        colors.push(`hsla(${hue}, 50%, 60%, 1)`);
+    for(var i=0; i<data.length; i++){
+        if(data[i] >= 70)
+            colors.push(`hsla(140, 50%, 60%, 1)`);
+        else
+            colors.push(`hsla(0, 50%, 60%, 1)`);
     }
     return colors
 }
 
 export function plotSummaryGraph(data){
+    document.getElementById('chart-area').style.margin = "0px 0px 30px 0px";
     document.getElementById('chart-area').innerHTML = "";
     const chartCanvas = document.createElement("CANVAS");
     const chartArea = document.getElementById('chart-area');
@@ -107,22 +109,47 @@ export function plotSummaryGraph(data){
 
     data = {
         datasets: [{
+            type: 'bar',
             data: [...courseAttendance],
-            backgroundColor: [...generateColors(courses.length)]
-        }],
+            label: "Your Subjectwise Attendance",
+            barThickness: 100,
+            backgroundColor: [...getColors(courseAttendance)]
+        },
+        {
+            type: 'line',
+            label: '70% Mark',
+            data: Array.from(Array(courses.length), () => 70),
+            borderColor: '#FAA19E',
+            backgroundColor: '#FCC7C5',
+            fill: false,
+            pointRadius: 0,
+            borderDash: [5]
+        }
+        
+    ],
     
-        labels: [...courses]
+    labels: [...courses]
+
     };
 
     new Chart(ctx, {
-        type: 'polarArea',
+        type: 'bar',
         data: data,
         options:{
             responsive: true,
             title: {
                 display: true,
                 text: 'Quick Overview'
-            }}
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        max:100
+                    }
+                }]
+            }
+        }
     });
 
 }
