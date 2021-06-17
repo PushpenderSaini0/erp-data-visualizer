@@ -107,6 +107,40 @@ function getColors(data) {
     return colors
 }
 
+//-Custom Plugin-//
+let originalLineDraw = Chart.controllers.horizontalBar.prototype.draw;
+Chart.helpers.extend(Chart.controllers.horizontalBar.prototype, {
+
+    draw: function () {
+        originalLineDraw.apply(this, arguments);
+
+        let chart = this.chart;
+        let ctx = chart.chart.ctx;
+
+        let index = chart.config.options.lineAtIndex;
+        if (index) {
+
+            let xaxis = chart.scales['x-axis-0'];
+            let yaxis = chart.scales['y-axis-0'];
+
+            let x1 = xaxis.getPixelForValue(index);
+            let y1 = yaxis.top;
+
+            let x2 = xaxis.getPixelForValue(index);
+            let y2 = yaxis.bottom;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.strokeStyle = 'red';
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+    }
+});
+
 export function plotSummaryGraph(data) {
     document.getElementById('chart-area').style.margin = "0px 0px 30px 0px";
     document.getElementById('chart-area').innerHTML = "";
@@ -124,40 +158,26 @@ export function plotSummaryGraph(data) {
 
     data = {
         datasets: [{
-            type: 'bar',
+            type: 'horizontalBar',
             data: courseAttendance,
-            label: "Your Subjectwise Attendance",
-            barThickness: 100,
+            label: "Subject Attendance",
             backgroundColor: getColors(courseAttendance)
-        },
-        {
-            type: 'line',
-            label: '70% Mark',
-            data: Array.from(Array(courses.length), () => 70),
-            borderColor: '#FAA19E',
-            backgroundColor: '#FCC7C5',
-            fill: false,
-            pointRadius: 0,
-            borderDash: [5]
-        }
-
-        ],
-
+        }],
         labels: courses
-
     };
 
     new Chart(ctx, {
-        type: 'bar',
+        type: 'horizontalBar',
         data: data,
         options: {
+            lineAtIndex: 70,
             responsive: true,
             title: {
                 display: true,
                 text: 'Quick Overview'
             },
             scales: {
-                yAxes: [{
+                xAxes: [{
                     ticks: {
                         beginAtZero: true,
                         max: 100
