@@ -19,6 +19,11 @@ const btnClickHandler = event => {
             throw "Could not fetch data";
         }
         else {
+
+            // adding a minor styles to page 
+            document.getElementById("jumbotron").style.display = "none";
+            document.getElementById("cources-btn-group").style.marginTop = '10px';
+
             document.getElementById('summary-table-area')
                 .innerHTML = `
             <div class="alert alert-success" role="alert">
