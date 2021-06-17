@@ -128,10 +128,10 @@ export function plotSummaryGraph(data){
     data = {
         datasets: [{
             type: 'bar',
-            data: [...courseAttendance],
+            data: courseAttendance,
             label: "Your Subjectwise Attendance",
             barThickness: 100,
-            backgroundColor: [...getColors(courseAttendance)]
+            backgroundColor: getColors(courseAttendance)
         },
         {
             type: 'line',
@@ -146,7 +146,7 @@ export function plotSummaryGraph(data){
         
     ],
     
-    labels: [...courses]
+    labels: courses
 
     };
 
