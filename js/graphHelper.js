@@ -7,7 +7,7 @@ export function plotGraph(data) {
     const chartArea = document.getElementById('chart-area');
     chartArea.appendChild(chartCanvas);
 
-    var ctx = chartCanvas.getContext('2d');
+    let ctx = chartCanvas.getContext('2d');
     const plotX = data.dates;
     const plotY = Array.from({ length: data.dates.length }, (_, index) => index + 1);
 
@@ -16,7 +16,7 @@ export function plotGraph(data) {
     const seventyP = ((7 / 10) * plotX.length).toFixed(2);;
 
     const plotYS = [];
-    for (var i = 0; i < plotX.length; i++) {
+    for (let i = 0; i < plotX.length; i++) {
         plotYS.push(seventyP);
     }
 
@@ -97,8 +97,8 @@ export function plotGraph(data) {
 function getColors(data){
     // returns an Array of n colors, 
     // if less than 70, red else green.
-    var colors = [];
-    for(var i=0; i<data.length; i++){
+    let colors = [];
+    for(let i=0; i<data.length; i++){
         if(data[i] >= 70)
             colors.push(`hsla(140, 50%, 60%, 1)`);
         else
@@ -114,12 +114,12 @@ export function plotSummaryGraph(data){
     const chartArea = document.getElementById('chart-area');
     chartArea.appendChild(chartCanvas);
 
-    var ctx = chartCanvas.getContext('2d');
+    let ctx = chartCanvas.getContext('2d');
 
     const courses = getCourses(data);
-    var courseAttendance = [];
+    let courseAttendance = [];
     courses.forEach( (course) =>{
-        var courseData = getAttandance(data, course);
+        let courseData = getAttandance(data, course);
         courseAttendance.push(((courseData.present / courseData.totalClasses) * 100).toFixed(2));
     });
 
