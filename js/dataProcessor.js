@@ -5,6 +5,11 @@ export function getCourses(data) {
     return [...cources];
 }
 
+function getPercentage(present, absent, leaveOfAbsence, totalClasses) {
+    let percentage = ((present / totalClasses) * 100).toFixed(2)
+    return percentage;
+}
+
 //get attandance for one cource
 export function getAttandance(data, cource) {
     const dates = [];
@@ -33,7 +38,8 @@ export function getAttandance(data, cource) {
             }
         }
     });
-    return { courseName, totalClasses, present, absent, leaveOfAbsence, dates, classAttended };
+    const percentage = getPercentage(present, absent, leaveOfAbsence, totalClasses);
+    return { courseName, totalClasses, present, absent, leaveOfAbsence, percentage, dates, classAttended };
 }
 
 export function getAbsentSummary(data, cource) {
