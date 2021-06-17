@@ -73,7 +73,7 @@ export function plotSummaryTable(data) {
 const plotAbsentSummaryTable = (data) => {
     const table = document.getElementById('absent-summary-table-area');
     let records = "";
-    data.forEach((element, index) => {
+    data.reverse().forEach((element, index) => {
         records += `<tr>
             <td> ${index + 1} </td>
             <td> ${element.date} </td>
