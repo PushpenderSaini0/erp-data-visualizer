@@ -2,6 +2,7 @@ import { errorBoxHandler } from "./errorBoxHandler.js";
 import { getERPData } from "./apiHandler.js";
 import { getCourses } from "./dataProcessor.js"
 import { addButton, showCourceDetail, spinnerHandler } from "./domHelper.js";
+import { plotSummaryGraph } from './graphHelper.js'
 
 const [showError, clearError] = errorBoxHandler;
 const [addSpinner, removeSpinner] = spinnerHandler;
@@ -29,6 +30,9 @@ const btnClickHandler = event => {
             `;
             removeSpinner(true, "Data Loaded");
             clearError();
+
+            plotSummaryGraph(data);
+
             getCourses(data).forEach(cource => {
                 addButton(cource).addEventListener("click", showCourceDetail.bind(this, [data]));
             }

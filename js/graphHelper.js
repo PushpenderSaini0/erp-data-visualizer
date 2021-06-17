@@ -1,3 +1,5 @@
+import {getCourses, getAttandance} from './dataProcessor.js'
+
 export function plotGraph(data) {
 
     document.getElementById('chart-area').innerHTML = "";
@@ -73,3 +75,55 @@ export function plotGraph(data) {
         }
     });
 }
+
+
+// helper function for plotSummaryGraph
+function generateColors(n){
+    // returns an Array of n colors
+    var colors = [];
+    var avg = Math.floor(360/n);
+    var hue = 0;
+    for(var i=0; i<n; i++){
+        hue += avg;
+        colors.push(`hsla(${hue}, 50%, 60%, 1)`);
+    }
+    return colors
+}
+
+export function plotSummaryGraph(data){
+    document.getElementById('chart-area').innerHTML = "";
+    const chartCanvas = document.createElement("CANVAS");
+    const chartArea = document.getElementById('chart-area');
+    chartArea.appendChild(chartCanvas);
+
+    var ctx = chartCanvas.getContext('2d');
+
+    const courses = getCourses(data);
+    var courseAttendance = [];
+    courses.forEach( (course) =>{
+        var courseData = getAttandance(data, course);
+        courseAttendance.push(((courseData.present / courseData.totalClasses) * 100).toFixed(2));
+    });
+
+    data = {
+        datasets: [{
+            data: [...courseAttendance],
+            backgroundColor: [...generateColors(courses.length)]
+        }],
+    
+        labels: [...courses]
+    };
+
+    new Chart(ctx, {
+        type: 'polarArea',
+        data: data,
+        options:{
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Quick Overview'
+            }}
+    });
+
+}
+
