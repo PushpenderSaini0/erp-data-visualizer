@@ -1,3 +1,5 @@
+import {getCourses, getAttandance} from './dataProcessor.js'
+
 export function plotGraph(data) {
 
     document.getElementById('chart-area').innerHTML = "";
@@ -73,3 +75,82 @@ export function plotGraph(data) {
         }
     });
 }
+
+
+// helper function for plotSummaryGraph
+function getColors(data){
+    // returns an Array of n colors, 
+    // if less than 70, red else green.
+    var colors = [];
+    for(var i=0; i<data.length; i++){
+        if(data[i] >= 70)
+            colors.push(`hsla(140, 50%, 60%, 1)`);
+        else
+            colors.push(`hsla(0, 50%, 60%, 1)`);
+    }
+    return colors
+}
+
+export function plotSummaryGraph(data){
+    document.getElementById('chart-area').style.margin = "0px 0px 30px 0px";
+    document.getElementById('chart-area').innerHTML = "";
+    const chartCanvas = document.createElement("CANVAS");
+    const chartArea = document.getElementById('chart-area');
+    chartArea.appendChild(chartCanvas);
+
+    var ctx = chartCanvas.getContext('2d');
+
+    const courses = getCourses(data);
+    var courseAttendance = [];
+    courses.forEach( (course) =>{
+        var courseData = getAttandance(data, course);
+        courseAttendance.push(((courseData.present / courseData.totalClasses) * 100).toFixed(2));
+    });
+
+    data = {
+        datasets: [{
+            type: 'bar',
+            data: [...courseAttendance],
+            label: "Your Subjectwise Attendance",
+            barThickness: 100,
+            backgroundColor: [...getColors(courseAttendance)]
+        },
+        {
+            type: 'line',
+            label: '70% Mark',
+            data: Array.from(Array(courses.length), () => 70),
+            borderColor: '#FAA19E',
+            backgroundColor: '#FCC7C5',
+            fill: false,
+            pointRadius: 0,
+            borderDash: [5]
+        }
+        
+    ],
+    
+    labels: [...courses]
+
+    };
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options:{
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Quick Overview'
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        max:100
+                    }
+                }]
+            }
+        }
+    });
+
+}
+
