@@ -36,8 +36,7 @@ export function plotSummaryTable(data) {
     }
 
     table.innerHTML = `
-    <h3> # ${data.courseName}</h3>
-    <br>
+    <h3 class='d-flex justify-content-center'>${data.courseName}</h3>
     <table class='table table-bordered'>
         <caption>${data.courseName}</caption>
         <tbody>
