@@ -49,6 +49,11 @@ export function plotSummaryTable(data) {
                 <th scope='row'>Classes you ${str} to maintain 70%</th>
                 <td> ${leaves} </td>
             </tr>
+        </tbody>
+    </table>
+    <br>
+    <table class='table table-bordered'>
+        <tbody>
             <tr>
                 <th scope='row'>Total Classes</th>
                 <td> ${data.totalClasses} </td>
