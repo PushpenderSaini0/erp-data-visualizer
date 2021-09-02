@@ -18,9 +18,11 @@ export function plotSummaryTable(data) {
     let leaves = 0;
     let tattandanceP = attandanceP;
     let str = "";
+    let alertclass = "";
 
     if (attandanceP >= 70) {
         str = "can miss";
+        alertclass = "success";
         while (tattandanceP > 70) {
             leaves = leaves + 1;
             tattandanceP = (((attandance.present) / (attandance.totalClasses + leaves)) * 100).toFixed(2);
@@ -29,6 +31,7 @@ export function plotSummaryTable(data) {
     }
     else {
         str = "need to attend";
+        alertclass = "danger";
         while (tattandanceP <= 70) {
             leaves = leaves + 1;
             tattandanceP = (((attandance.present + leaves) / (attandance.totalClasses + leaves)) * 100).toFixed(2);
@@ -43,11 +46,17 @@ export function plotSummaryTable(data) {
         <tbody>
             <tr>
                 <th scope='row'>Your Attandance :</th>
-                <td> ${attandanceP}% </td>
+                <td>
+                    <div class='alert-${alertclass}'> 
+                        ${attandanceP}% 
+                    </div>        
+                </td>
             </tr>
             <tr>
-                <th scope='row'>Classes you ${str} to maintain 70%</th>
-                <td> ${leaves} </td>
+                <th scope='row'>
+                    Classes you <span class='alert-${alertclass}'>${str}</span> to maintain 70%
+                </th>
+                <td>${leaves}</td>
             </tr>
         </tbody>
     </table>
